@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { FiLogOut } from 'react-icons/fi'
 import dayjs from 'dayjs'
 import { Bar } from 'react-chartjs-2'
@@ -15,11 +15,6 @@ import {
 } from 'chart.js'
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const api = import.meta.env.VITE_API_BASE
-
-// Compra em andamento no localStorage
-function getCurrentShopping() {
-  return JSON.parse(localStorage.getItem('currentShopping') || '[]')
-}
 
 export default function Dashboard({token}:{token:string}){
   const [purchases,setPurchases] = useState<any[]>([])
