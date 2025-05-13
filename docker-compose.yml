@@ -41,5 +41,5 @@ volumes:
   pgdata:
 
 networks:
-  npm_public:
+  nginx_default:
     external: true
