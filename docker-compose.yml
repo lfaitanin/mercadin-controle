@@ -1,0 +1,41 @@
+services:
+  api:
+    build: ./backend
+    env_file: .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: faitanin123
+      POSTGRES_DB: controle
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pguser -d controle"]
+      interval: 5s
+      retries: 5
+    restart: unless-stopped
+    ports:
+      - "5433:5433"
+  front:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        - VITE_API_BASE=${VITE_API_BASE}   # usa o mesmo .env
+    environment:
+      - VITE_API_BASE=${VITE_API_BASE}     # disponível em runtime se precisar
+    depends_on:
+      - api
+    ports:
+      - "5173:80"
+
+volumes:
+  pgdata:

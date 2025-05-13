@@ -34,11 +34,6 @@ Thumbs.db
 .env.test.local
 .env.production.local
 
-# Docker
-**/docker-compose.override.yml
-**/.env.docker
-**/Dockerfile.*
-**/docker-compose*.yml
 
 # Prisma
 backend/prisma/dev.db
