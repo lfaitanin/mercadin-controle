@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://pguser:faitanin123@db:5433/controle?schema=public"
+}
+
+model users {
+  id         String     @id @default(uuid())
+  email      String     @unique
+  password_hash String
+  created_at DateTime   @default(now())
+  shoppings  Shopping[]
+}
+
+model products {
+  id     String        @id @default(uuid())
+  ean    String?       @unique
+  name   String
+  items  ShoppingItem[]
+}
+
+model Shopping {
+  id         String        @id @default(uuid())
+  user_id    String
+  store      String
+  created_at DateTime      @default(now())
+  items      ShoppingItem[]
+  user       users         @relation(fields: [user_id], references: [id])
+}
+
+model ShoppingItem {
+  id          String    @id @default(uuid())
+  shopping_id String
+  product_id  String
+  price       Decimal   @db.Decimal(10,2)
+  quantity    Int
+
+  shopping    Shopping  @relation(fields: [shopping_id], references: [id])
+  product     products  @relation(fields: [product_id], references: [id])
+}
