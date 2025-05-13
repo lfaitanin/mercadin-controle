@@ -160,6 +160,4 @@ app.get('/shopping/:id', auth, async (req, res) => {
 })
 
 app.listen(3000)
-app.use(cors({
-    origin: ['http://62.171.157.58', 'http://62.171.157.58:5173', 'https://meu-mercadinho-api.mooo.com']
-  }));
+app.use(cors());
