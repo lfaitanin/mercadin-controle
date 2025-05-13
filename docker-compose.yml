@@ -39,3 +39,7 @@ services:
 
 volumes:
   pgdata:
+
+networks:
+  npm_public:
+    external: true
